@@ -1,0 +1,28 @@
+<!--
+  Generated template for the LoginPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-content class="login">
+  <div text-center>
+    <h1 class="nica-title" color="white"><span class="n-logo">N</span>icaLiv<span class="e-logo">e</span></h1>
+  </div>
+
+  <ion-card text-center class="login-card">
+    <ion-card-header center-text>
+      <img src="../assets/avatar.gif" alt="Avatar" class="login-avatar">
+    </ion-card-header>
+
+    <ion-card-content>
+      <div class="login-buttons">
+        <button ion-button full round><ion-icon name="logo-facebook" class="fb-icon"></ion-icon>Iniciar con Facebook</button>
+        <button ion-button full clear color="light" (click)="gotoHomePage()">Continuar como invitado</button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <footer>
+    <a href="#">Politicas de privacidad</a>
+  </footer>
+</ion-content>
