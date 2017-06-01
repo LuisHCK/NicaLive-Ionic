@@ -13,7 +13,9 @@ import { FacebookProvider } from './../../providers/facebook-provider';
   providers: [FacebookProvider]
 })
 export class PageDetailsPage {
-  details:any
+  details: any
+  photos: any
+  description: string
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public facebookProvider: FacebookProvider) {
@@ -23,11 +25,32 @@ export class PageDetailsPage {
   loadData(id) {
     this.facebookProvider
       .getPageDetails(id).subscribe(
-        result => {
-          this.details=result;
-          console.log(result)
+      result => {
+        this.details = result;
+        this.getDescription(result)
+
+        /** Try to get photos from page */
+        try {
+          var jsonAlbums = JSON.stringify(result.albums.data)
+          this.photos = JSON.parse(jsonAlbums)
+        } catch (error) {
+          console.log('No Pictures Found')
         }
+      }
       )
+  }
+
+  /** Get description from aviable strings */
+  getDescription(details) {
+    if (details.about) {
+      this.description = details.about
+    }
+    else if (details.description) {
+      this.description = details.description
+    }
+    else {
+      this.description = 'No se dispone de ninguna descripción'
+    }
   }
 
   /** This converts maped data in a readable object */

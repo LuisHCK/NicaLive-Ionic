@@ -18,25 +18,50 @@
   <img src="{{details?.cover?.source}}" alt="Cover" class="cover">
 
   <div class="presentation" text-center>
-    <img src="{{details?.picture.data.url}}" alt="" class="circle-img login-avatar profile-avatar">
+    <img src="{{details?.picture?.data.url}}" alt="" class="circle-img login-avatar profile-avatar">
     <strong class="white-text">{{details?.name}}</strong>
     <p class="white-text">
       <ion-icon name="navigate"></ion-icon>
-      {{details?.location?.city}} <br> {{details?.location?.street}}
+      <strong>{{details?.location?.city}} <br> {{details?.location?.street}}</strong>
     </p>
   </div>
 
-  <ion-grid class="actions">
+  <div text-center class="white-text desc-text">
+    {{description}}
+  </div>
+
+  <div class="actions">
     <ion-row>
-      <ion-col col-6>
-        <button ion-button full>Guardar</button>
+      <ion-col>
+        <button ion-button clear full>
+          <ion-icon name="image"></ion-icon>          
+        </button>
       </ion-col>
-      <ion-col col-6>
-        <button ion-button color="secondary" full>Invitar Amigos</button>
+
+      <ion-col>
+        <button ion-button clear full>
+          <ion-icon ios="ios-navigate" md="md-navigate"></ion-icon>
+        </button>
+      </ion-col>
+
+      <ion-col>
+        <button ion-button clear full>
+          <ion-icon ios="ios-chatbubbles" md="md-chatbubbles"></ion-icon>
+        </button>
+      </ion-col>
+
+      <ion-col>
+        <button ion-button clear full>
+          <ion-icon ios="ios-bookmark" md="md-bookmark"></ion-icon>
+        </button>
       </ion-col>
     </ion-row>
-  </ion-grid>
+  </div>
 
-
+  <ion-slides class="album-slider">
+    <ion-slide *ngFor="let photo of photos">
+      <img src="{{photo.picture?.data?.url}}" alt="">
+    </ion-slide>
+  </ion-slides>
 
 </ion-content>

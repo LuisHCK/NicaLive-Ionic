@@ -23,7 +23,7 @@ export class FacebookProvider {
   };
 
   private grapQuerybyName = `?fields=id,name,description_html,description,about,location,category,
-                             phone,picture.type(large),cover,username,albums{picture}&
+                             phone,picture.type(large),cover,username,albums{picture.type(album)}&
                              access_token=${this.Token}`
   
   /** Get page data by ID */
