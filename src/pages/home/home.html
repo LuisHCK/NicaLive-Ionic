@@ -1,45 +1,60 @@
 <ion-header>
-  <ion-navbar color="primary">
-    <ion-title>Home</ion-title>
-  </ion-navbar>
+  <ion-toolbar color="primary">
+    <ion-searchbar (input)="getItems($event)" (ionClear)="resetPages()"></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-<ion-card>
+<ion-content class="home">
+  <ng-container *ngFor="let page of pages">
+    <ion-card>
+      <ion-item>
+        <ion-avatar item-left>
+          <img-loader src="{{page.picture.data.url}}" (click)="gotoPage(page.id)" useImg></img-loader>
+        </ion-avatar>
+        <h2 (click)="gotoPage(page.id)">{{page.name}}</h2>
+        <p>
+          <ion-icon name="navigate"></ion-icon> <strong>{{page.location?.city}}</strong><br>
+          {{page.location?.street}}
+        </p>
+      </ion-item>
 
-  <ion-item>
-    <ion-avatar item-left>
-      <img src="img/marty-avatar.png">
-    </ion-avatar>
-    <h2>Marty McFly</h2>
-    <p>November 5, 1955</p>
-  </ion-item>
+      <div *ngIf="page.cover; else elseBlock">
+        <div class="crop">
+          <img-loader #thenBlock src="{{page.cover?.source}}" (click)="gotoPage(page.id)" useImg></img-loader>
+        </div>
+      </div>
+      <ng-template #elseBlock>
+        <div class="crop">
+          <img-loader src="../assets/cover-default.jpg" (click)="gotoPage(page.id)" useImg></img-loader>
+        </div>
+      </ng-template>
 
-  <img src="img/advance-card-bttf.png">
+      <ion-card-content>
+      <div *ngIf="page.about; else elseBlockAbout">
+          {{page.about}}
+      </div>
+      <ng-template #elseBlockAbout>
+          {{page.description_html}}
+      </ng-template>
+      </ion-card-content>
 
-  <ion-card-content>
-    <p>Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out of a DeLorean?! Whoa. This is heavy.</p>
-  </ion-card-content>
-
-  <ion-row>
-    <ion-col>
-      <button ion-button icon-left clear small>
-        <ion-icon name="thumbs-up"></ion-icon>
-        <div>12 Likes</div>
-      </button>
-    </ion-col>
-    <ion-col>
-      <button ion-button icon-left clear small>
-        <ion-icon name="text"></ion-icon>
-        <div>4 Comments</div>
-      </button>
-    </ion-col>
-    <ion-col center text-center>
-      <ion-note>
-        11h ago
-      </ion-note>
-    </ion-col>
-  </ion-row>
-
-</ion-card>
+      <ion-row class="action-area">
+        <ion-col center-text>
+          <button ion-button icon-only full clear> 
+            <ion-icon ios="ios-checkmark-circle-outline" md="md-checkmark-circle"></ion-icon>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-only full clear> 
+            <ion-icon name="contacts"></ion-icon>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-only full clear> 
+            <ion-icon name="share"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+  </ng-container>
 </ion-content>
