@@ -6,6 +6,7 @@ import { FacebookProvider } from './../../providers/facebook-provider';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import { AlertController } from 'ionic-angular';
+import { LoadingController } from 'ionic-angular';
 
 import { PageDetailsPage } from './../page-details/page-details';
 
@@ -32,21 +33,28 @@ export class HomePage {
   ]
 
   constructor(public navCtrl: NavController, public facebookProvider: FacebookProvider,
-    public alertCtrl: AlertController) {
+    public alertCtrl: AlertController, private loadingCtrl: LoadingController) {
     //this.getPages('lugares', 'nicaragua')
     this.getRecommended()
   }
 
   getRecommended() {
-    for (let page of this.recommends) {
-      this.facebookProvider
-        .getPageDetails(page.id).subscribe(
-        result => {
-          this.pages.push(JSON.parse(JSON.stringify(result)))
-          console.log(JSON.parse(JSON.stringify(result)))
-        })
-    }
-    //console.log(this.pages)
+    let loader = this.loadingCtrl.create({
+      content: 'Cargando...',
+    });
+
+    loader.present().then(() => {
+      for (let page of this.recommends) {
+        this.facebookProvider
+          .getPageDetails(page.id).subscribe(
+          result => {
+            this.pages.push(JSON.parse(JSON.stringify(result)))
+            //console.log(JSON.parse(JSON.stringify(result)))
+          })
+      }
+      loader.dismiss();
+    });
+
   }
 
 
@@ -57,11 +65,18 @@ export class HomePage {
     });
   }
 
-  getItems(){
-
+  getItems(searchBar) {
+    var q = searchBar.srcElement.value;
+    if (q) {
+      this.facebookProvider.getPages(q, '').subscribe(
+        result => {
+          this.pages = result;
+        })
+    }
   }
-  resetPages(){
 
+  resetPages() {
+    this.pages.length = 0
+    this.getRecommended()
   }
-
 }
