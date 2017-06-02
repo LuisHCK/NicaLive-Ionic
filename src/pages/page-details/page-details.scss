@@ -2,52 +2,43 @@ ion-content.profile-page {
   background-color: #24222f;
 }
 
-.presentation {
-  margin-top: 10px;
+.profile-page ion-card {
+  background-color: rgba(150, 150, 150, 0.6)
 }
 
-.cover {
-  z-index: -1;
+.profile-page img.profile-avatar {
+  padding-top: 10px;
+  border-radius: 50%;
+  height: 110px;
+  width: auto;
+  margin: auto;
+  display: block;
+}
+
+.content {
   position: absolute;
   width: 100%;
+  display: block;
+}
+
+.profile-page .cover {
   height: 180px;
-  opacity: 0.3;
-  background-image: url('../assets/cover.png');
   background-size: cover;
-  background-clip: border-box;
+  background-repeat: no-repeat;
+  background-position: center center;
+  filter: contrast(50%);
+  z-index: -10;
+  position: relative;
 }
 
-.white-text {
-  color: #EEEEEE !important;
-}
-
-.profile-avatar {
-  height: 80px !important;
-  width: 80px;
-}
-
-.actions {
-  margin-top: 0px! important;
-  background-color: #32323e;
-  max-height: 50%;
-  -webkit-box-shadow: 0px 7px 26px -10px rgba(0, 0, 0, 0.87);
-  -moz-box-shadow: 0px 7px 26px -10px rgba(0, 0, 0, 0.87);
-  box-shadow: 0px 7px 26px -10px rgba(0, 0, 0, 0.87);
-}
-
-.actions button {
-  color: lightgrey !important;
-}
-
-.actions ion-col {
+ion-grid.actions {
+  background-color: #2c2831;
   padding: 0px !important;
+  -webkit-box-shadow: 0px 8px 23px -7px rgba(0, 0, 0, 0.76);
+  -moz-box-shadow: 0px 8px 23px -7px rgba(0, 0, 0, 0.76);
+  box-shadow: 0px 8px 23px -7px rgba(0, 0, 0, 0.76);
 }
 
-.album-slider {
-  height: 300px !important;
-}
-
-div.desc-text {
-  padding: 8px;
-  background-color: #32323e;
+ion-grid.actions button {
+  color: #F5F5F5 !important;
 }

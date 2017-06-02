@@ -14,54 +14,36 @@
 
 
 <ion-content class="profile-page">
+  <div class="presentation">
+    <div class="content" text-center>
+      <img src="{{details?.picture?.data?.url}}" alt="{{details?.name}}" class="profile-avatar">
 
-  <img src="{{details?.cover?.source}}" alt="Cover" class="cover">
+      <p text-center class="white-text">
+        <ion-icon name="navigate"></ion-icon><strong>{{details?.location?.city}}</strong> <br>
+        <strong>{{details?.location?.street}}</strong>
+      </p>
+    </div>
 
-  <div class="presentation" text-center>
-    <img src="{{details?.picture?.data.url}}" alt="" class="circle-img login-avatar profile-avatar">
-    <strong class="white-text">{{details?.name}}</strong>
-    <p class="white-text">
-      <ion-icon name="navigate"></ion-icon>
-      <strong>{{details?.location?.city}} <br> {{details?.location?.street}}</strong>
-    </p>
+    <div class="cover" [style.background-image]="getBackground(details?.cover?.source)"></div>
+
+    <ion-grid class="actions">
+      <ion-row>
+        
+        <ion-col>
+          <button ion-button icon-only clear full small><ion-icon name="navigate"></ion-icon></button>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-only clear full small><ion-icon name="image"></ion-icon></button>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-only clear full small><ion-icon name="people"></ion-icon></button>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-only clear full small><ion-icon name="bookmark"></ion-icon></button>
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+
   </div>
-
-  <div text-center class="white-text desc-text">
-    {{description}}
-  </div>
-
-  <div class="actions">
-    <ion-row>
-      <ion-col>
-        <button ion-button clear full>
-          <ion-icon name="image"></ion-icon>          
-        </button>
-      </ion-col>
-
-      <ion-col>
-        <button ion-button clear full>
-          <ion-icon ios="ios-navigate" md="md-navigate"></ion-icon>
-        </button>
-      </ion-col>
-
-      <ion-col>
-        <button ion-button clear full>
-          <ion-icon ios="ios-chatbubbles" md="md-chatbubbles"></ion-icon>
-        </button>
-      </ion-col>
-
-      <ion-col>
-        <button ion-button clear full>
-          <ion-icon ios="ios-bookmark" md="md-bookmark"></ion-icon>
-        </button>
-      </ion-col>
-    </ion-row>
-  </div>
-
-  <ion-slides class="album-slider">
-    <ion-slide *ngFor="let photo of photos">
-      <img src="{{photo.picture?.data?.url}}" alt="">
-    </ion-slide>
-  </ion-slides>
-
 </ion-content>

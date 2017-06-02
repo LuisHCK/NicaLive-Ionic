@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { DomSanitizer} from '@angular/platform-browser';
 
-import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 
 import { FacebookProvider } from './../../providers/facebook-provider';
@@ -16,9 +16,10 @@ export class PageDetailsPage {
   details: any
   photos: any
   description: string
+  cover: string
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public facebookProvider: FacebookProvider) {
+    public facebookProvider: FacebookProvider, private sanitizer: DomSanitizer) {
     this.loadData(navParams.get('id'))
   }
 
@@ -28,17 +29,19 @@ export class PageDetailsPage {
       result => {
         this.details = result;
         this.getDescription(result)
+        console.log(result)
 
         /** Try to get photos from page */
         try {
           var jsonAlbums = JSON.stringify(result.albums.data)
           this.photos = JSON.parse(jsonAlbums)
-        } catch (error) {
+        }
+        catch (error) {
           console.log('No Pictures Found')
         }
-      }
-      )
+      })
   }
+
 
   /** Get description from aviable strings */
   getDescription(details) {
@@ -53,31 +56,6 @@ export class PageDetailsPage {
     }
   }
 
-  /** This converts maped data in a readable object */
-  mapPage = (pageDetails) => {
-    return {
-      name: pageDetails.name,
-      description: pageDetails.description_html,
-      city: this.getCity(pageDetails.location),
-      street: this.getCity(pageDetails.location),
-      category: pageDetails.category,
-      phone: pageDetails.phone,
-      picture: pageDetails.picture['data'].url + "",
-      cover: this.getJson(pageDetails['cover']),
-      id: pageDetails.id
-    };
-  }
-
-  /** Get json an return url string, if url not exists return a default image */
-  getJson(cover) {
-    try {
-      return cover['source'] + ""
-    }
-    catch (e) {
-      return '../assets/cover.gif'
-    }
-  }
-
   /** Navitate to details page */
   gotoPage(id) {
     this.navCtrl.push(PageDetailsPage, {
@@ -85,19 +63,11 @@ export class PageDetailsPage {
     });
   }
 
-  getCity(location) {
-    try {
-      return location['city'] + ""
-    } catch (e) {
-      return ''
-    }
-  }
-
-  getStreet(location) {
-    try {
-      return location['street'] + ""
-    } catch (e) {
-      return ''
+  getBackground(cover){
+    if (cover) {
+      return this.sanitizer.bypassSecurityTrustStyle(`url(${cover})`);
+    } else {
+      return this.sanitizer.bypassSecurityTrustStyle("url('../assets/cover-default.jpg')")
     }
   }
 
