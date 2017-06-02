@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-searchbar (input)="getItems($event)" (ionClear)="resetPages()"></ion-searchbar>
+    <ion-searchbar [debounce]="500" (ionInput)="getItems($event)" (ionClear)="resetPages()"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
@@ -25,7 +25,7 @@
       </div>
       <ng-template #elseBlock>
         <div class="crop">
-          <img-loader src="../assets/cover-default.jpg" (click)="gotoPage(page.id)" useImg></img-loader>
+          <img-loader src="assets/cover-default.jpg" (click)="gotoPage(page.id)" useImg></img-loader>
         </div>
       </ng-template>
 
